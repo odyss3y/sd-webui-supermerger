@@ -2,14 +2,14 @@
 - [AUTOMATIC1111's stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui) 用のモデルマージ拡張
 - マージしたモデルを保存せず直接生成に使用できます
 
-[<img src="https://img.shields.io/badge/lang-Egnlish-red.svg?style=plastic" height="25" />](README.md)
+[<img src="https://img.shields.io/badge/lang-English-red.svg?style=plastic" height="25" />](README.md)
 [<img src="https://img.shields.io/badge/言語-日本語-green.svg?style=plastic" height="25" />](#overview)
 [<img src="https://img.shields.io/badge/Support-%E2%99%A5-magenta.svg?logo=github&style=plastic" height="25" />](https://github.com/sponsors/hako-mikan)
 
 
 # Overview
-このextentionではモデルをマージした際、保存せずに画像生成用のモデルとして読み込むことができます。
-これまでマージしたモデルはいったん保存して気に入らなければ削除するということが必要でしたが、このextentionを使うことでHDDやSSDの消耗を防ぐことができます。
+このextensionではモデルをマージした際、保存せずに画像生成用のモデルとして読み込むことができます。
+これまでマージしたモデルはいったん保存して気に入らなければ削除するということが必要でしたが、このextensionを使うことでHDDやSSDの消耗を防ぐことができます。
 モデルの保存とロードの時間を節約できるため、比率を変更しながら連続生成することによりモデルマージの効率を大幅に向上させます。
 
 # もくじ
@@ -22,11 +22,11 @@
     - [Generation Parameters](#generation-parameters)
 - [LoRA](#lora)
     - [Merge LoRAs](#merge-loras)
-    - [Merge to Checipoint](#merge-to-checkpoint)
+    - [Merge to Checkpoint](#merge-to-checkpoint)
     - [Extract from Checkpoints](#extract-from-checkpoints)
 - [Other Tabs](#other-tabs)
 
-- [Calcomode](calcmode_ja.md)
+- [Calcmode](calcmode_ja.md)
 - [Elemental Merge](elemental_ja.md)
 
 
@@ -55,7 +55,7 @@ XLモデルのマージには最低64GBのCPUメモリが必要です。64Gの�
 ## Merge Models
 ここでマージされたモデルは、Web-UIの生成モデルとしてロードされます。左上のモデル表示は変わりませんが、マージされたモデルは実際にロードされています。別のモデルが左上のモデル選択から選択されるまで、マージされたモデルはロードされたままになります。
 ### Basic Usage
-Select models A/B/(C), the merge mode, and alpha (beta), then press Merge/Merge and Gen to start the merging process. In the case of Merge and Gen, generation is carried out using the prompt and other settings specified in txt2img.The Gen button only generates images, and the Stop button interrupts the merging process.
+Select models A/B/(C), the merge mode, and alpha (beta), then press Merge/Merge and Gen to start the merging process. In the case of Merge and Gen, generation is carried out using the prompt and other settings specified in txt2img. The Gen button only generates images, and the Stop button interrupts the merging process.
 モデルA/B/(C)、merge mode、alpha (beta)を選択し、Merge/Merge and Genを押すとマージ処理が始まります。Merge and Genの場合は、txt2imgで指定されたプロンプトやその他の設定を使用して生成が行われます。Genボタンは画像のみを生成し、Stopボタンはマージを中断します。
 
 ### Load Settings From:
@@ -310,7 +310,7 @@ LoCon/LyCoris のモデルへのマージにはweb-ui1.5以上が必要です。
 ### Merge LoRAs
 ひとつまたは複数のLoRA同士をマージします。kohya-ss氏の最新のスクリプトを使用しているので、dimensionの異なるLoRA同氏もマージ可能ですが、dimensionの変換の際はLoRAの再計算を行うため、生成される画像が大きく異なる可能性があることに注意してください。  
 
-calculate dimentionボタンで各LoRAの次元を計算して表示・ソート機能が有効化します。計算にはわりと時間がかかって、50程度のLoRAでも数十秒かかります。新しくマージされたLoRAはリストに表示されないのでリロードボタンを押してください。次元の再計算は追加されたLoRAだけを計算します。
+calculate dimensionボタンで各LoRAの次元を計算して表示・ソート機能が有効化します。計算にはわりと時間がかかって、50程度のLoRAでも数十秒かかります。新しくマージされたLoRAはリストに表示されないのでリロードボタンを押してください。次元の再計算は追加されたLoRAだけを計算します。
 
 ### Merge to Checkpoint
 Merge LoRAs into a model. Multiple LoRAs can be merged at the same time.  
@@ -325,10 +325,10 @@ LoRAname1:ratio1:1,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0
 
 ### Extract from checkpoints
 ふたつのモデルの差分からLoRAを生成します。
-demensionを指定すると指定されたdimensionで作製されます。無指定の場合は128で作製します。
+dimensionを指定すると指定されたdimensionで作製されます。無指定の場合は128で作製します。
 alphaとbetaによって配合比率を調整することができます。$(\alpha A - \beta B)$　alpha, beta = 1が通常のLoRA作成となります。
 
-### Extract from tow LoRAs
+### Extract from two LoRAs
 [こちら](calcmode_ja.md#extractlora)を参照して下さい。
 
 ### Metadata
@@ -357,11 +357,11 @@ same to Strengthオプションを使用しない場合は、kohya-ss氏の作�
 2つのモデルの違いを分析してください。比較したいモデルを選んでください、モデルAとモデルBを。
 ### Mode
 
-ASimilalityモードは、qkvから計算されたテンソルを比較します。他のモードは各要素のコサイン類似度から計算します。ASimilalityモード以外では計算された差が小さくなるようです。ASimilalityモードは出力画像の違いに近い結果を与えるため、一般的にはこのモードを使用すべきです。
-このAsimilality分析は、[Asimilality script](https://huggingface.co/JosephusCheung/ASimilarityCalculatior)を拡張して作成されました。
+ASimilarityモードは、qkvから計算されたテンソルを比較します。他のモードは各要素のコサイン類似度から計算します。ASimilarityモード以外では計算された差が小さくなるようです。ASimilarityモードは出力画像の違いに近い結果を与えるため、一般的にはこのモードを使用すべきです。
+このASimilarity分析は、[ASimilarity script](https://huggingface.co/JosephusCheung/ASimilarityCalculatior)を拡張して作成されました。
 
 ### Block Method
-ASimilalityモード以外のモードで各階層の比率を計算する方法です。Meanは平均を表し、minは最小値を表し、attn2は階層の計算結果としてattn2の値を出力します。
+ASimilarityモード以外のモードで各階層の比率を計算する方法です。Meanは平均を表し、minは最小値を表し、attn2は階層の計算結果としてattn2の値を出力します。
 
 ## History
 マージ履歴を検索することができます。検索機能は「and」と「or」の両方の検索に対応しています。

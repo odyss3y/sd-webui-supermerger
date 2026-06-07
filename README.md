@@ -1,8 +1,8 @@
 # SuperMerger
-- Model merge extention for [AUTOMATIC1111's stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui) 
+- Model merge extension for [AUTOMATIC1111's stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
 - Merge models can be loaded directly for generation without saving
 
-[<img src="https://img.shields.io/badge/lang-Egnlish-red.svg?style=plastic" height="25" />](#overview)
+[<img src="https://img.shields.io/badge/lang-English-red.svg?style=plastic" height="25" />](#overview)
 [<img src="https://img.shields.io/badge/言語-日本語-green.svg?style=plastic" height="25" />](README_ja.md)
 [<img src="https://img.shields.io/badge/Support-%E2%99%A5-magenta.svg?logo=github&style=plastic" height="25" />](https://github.com/sponsors/hako-mikan)
 
@@ -21,18 +21,18 @@ This extension significantly improves the efficiency of model merging by elimina
     - [Generation Parameters](#generation-parameters)
 - [LoRA](#lora)
     - [Merge LoRAs](#merge-loras)
-    - [Merge to Checipoint](#merge-to-checkpoint)
+    - [Merge to Checkpoint](#merge-to-checkpoint)
     - [Extract from Checkpoints](#extract-from-checkpoints)
     - [Extract from two LoRAs](#extract-from-two-loras)
 - [Other Tabs](#other-tabs)
-- [Calcomode](calcmode_en.md)
+- [Calcmode](calcmode_en.md)
 - [Elemental Merge](elemental_en.md)
 
 # Recent Update
 2024.02.02 0000(JST)
 - bug fix
-- MakeLoRaの標識が変わりました。Dreanboothに習ってモデル名をTunedとOriginalに変更しています。
-- The model name for MakeLoRA has changed. Following to the Dreambooth, the model names have been changed to Tuned and Original.
+- MakeLoRAの標識が変わりました。DreamBoothに習ってモデル名をTunedとOriginalに変更しています。
+- The model name for MakeLoRA has changed. Following DreamBooth, the model names have been changed to Tuned and Original.
 
 2023.11.18.0000(JST)
 - add new option:use cuda
@@ -59,7 +59,7 @@ A minimum of 64GB of CPU memory is required for the XL model merge. Even with 64
 **注意！**
 XLモデルのマージには最低64GBのCPUメモリが必要です。64Gのメモリであっても併用しているソフトによってはシステムが不安定になる恐れがあるのでシステムが落ちてもいい状態で作業して下さい。私は久しぶりにブルースクリーンに遭遇しました。
 
-## Knowon issues/既知の問題
+## Known issues/既知の問題
 If you have other extensions (like sd-webui-prompt-all-in-one) installed simultaneously, enabling the option to automatically open the browser upon launch can cause instability in its operation. It's likely an issue with Gradio, so it might be difficult to fix. Please disable that option and use it.  
 他の拡張機能（sd-webui-prompt-all-in-oneなど）を同時にインストールしている場合、起動時にブラウザを自動的に開くオプションを有効にすると、動作が不安定になることがあります。Gradioの問題である可能性が高いので、修正は難しいです。そのオプションを無効にしてお使いください。
 
@@ -70,7 +70,7 @@ All updates can be found [here](changelog.md)
 The model merged here is loaded as a generation model for the Web-UI. The model display on the top left does not change, but the merged model is indeed loaded. The merged model will remain loaded until a different model is selected from the model selection on the top left.
 
 ### Basic Usage
-Select models A/B/(C), the merge mode, and alpha (beta), then press Merge/Merge and Gen to start the merging process. In the case of Merge and Gen, generation is carried out using the prompt and other settings specified in txt2img.The Gen button only generates images, and the Stop button interrupts the merging process.
+Select models A/B/(C), the merge mode, and alpha (beta), then press Merge/Merge and Gen to start the merging process. In the case of Merge and Gen, generation is carried out using the prompt and other settings specified in txt2img. The Gen button only generates images, and the Stop button interrupts the merging process.
 
 ### Load Settings From:
 Read settings from merge log. The log is updated each time a merge is performed, and a sequential ID starting from 1 is assigned. "-1" corresponds to the settings from the last merge, and "-2" is for the one before last. The merge log is saved in extension/sd-webui-supermerger/mergehistory.csv. You can browse and search in the History tab. You can search and/or by separating with a half-width space.
@@ -103,7 +103,7 @@ You can set the calculation method. Please refer to [here](calcmode_en.md) for d
 |self  | The weight is multiplied by alpha.   |  Weight sum  |
 
 ### use MBW
-Block-by-blockc merging is enabled. Please set the weights in the Merge Block Weight. Enabling this will disable alpha and beta.
+Block-by-block merging is enabled. Please set the weights in the Merge Block Weight. Enabling this will disable alpha and beta.
 
 ### Options
 | Options         | Description                                       |
@@ -154,7 +154,7 @@ Change alpha and beta.
 Change alpha and beta at the same time. Separate alpha and beta with a single space, and separate each element with a comma. If only one number is entered, the same value is entered for both alpha and beta.  
 Example: 0, 0.5 0.1, 0.3 0.4, 0.5
 ### MBW
-Performs a block-byblock merge. Enter ratios separated by newlines. Presets can be used, but be careful to **separate on a new line**.For Triple and Twice, enter two lines as a set. An odd number of lines will result in an error. 
+Performs a block-by-block merge. Enter ratios separated by newlines. Presets can be used, but be careful to **separate on a new line**. For Triple and Twice, enter two lines as a set. An odd number of lines will result in an error.
 ### seed
 Changes the seed. Entering -1 will result in a fixed seed in the opposite axis direction.
 ### model_A, B, C
@@ -181,7 +181,7 @@ for XL model
 BASE,IN00,IN01,IN02,IN03,IN04,IN05,IN06,IN07,IN08,M00,OUT00,OUT01,OUT02,OUT03,OUT04,OUT05,OUT06,OUT07,OUT08
 
 ### calcmode
-change calclation mode.  
+Change calculation mode.
 Note the correspondence between calculation mode and merge mode.
 
 ### prompt
@@ -191,7 +191,7 @@ You can change the prompt. The negative prompt does not change. Separate with a 
 The Reserve XY plot button reserves the execution of an XY plot for the setting at the time the button is pressed, instead of immediately executing the plot. The reserved XY plot will be executed after the normal XY plot is completed or by pressing the Start XY plot button on the Reservation tab. Reservations can be made at any time during the execution or non-execution of an XY plot. The reservation list is not automatically updated, so use the Reload button. If an error occurs, the plot is discarded and the next reservation is executed. Images will not be displayed until all reservations are finished, but those that have been marked "Finished" have finished generating the grid and can be viewed in the Image Browser or other applications.
 
 It is also possible to move to an appointment at any location by using "|".  
-Inputing "0.1,0.2,0.3,0.4,0.5|0.6,0.7,0.8,0.9,1.0"
+Inputting "0.1,0.2,0.3,0.4,0.5|0.6,0.7,0.8,0.9,1.0"
 
 0.1,0.2,0.3,0.4,0.5  
 0.6,0.7,0.8,0.9,1.0  
@@ -280,7 +280,7 @@ see [here](elemental_en.md)
 You can also set the conditions for image generation here. If values are set here, they will take priority.
 
 ## Include/Exclude
-When merging, you can set blocks that you want to include/exclude. Only the selected blocks will be merged / will not be merged. If you check 'print', you can confirm whether a block has been include/excluded on the Command Prompt screen. If you check 'Adjust', the elements used in Adjust will be included/excluded. You can also specify things like `attn`, and in this case, elements containing `attn` will be included/excluded. Separate the strings with commas.
+When merging, you can set blocks that you want to include/exclude. Only the selected blocks will be merged / will not be merged. If you check 'print', you can confirm whether a block has been included/excluded on the Command Prompt screen. If you check 'Adjust', the elements used in Adjust will be included/excluded. You can also specify things like `attn`, and in this case, elements containing `attn` will be included/excluded. Separate the strings with commas.
 
 ## unload button
 Deletes the currently loaded model. This is used to free up GPU memory when using kohya-ss GUI. Once the model is deleted, you will not be able to generate images. If you want to generate images, please re-select models.
@@ -291,7 +291,7 @@ LoRA related functions. It is basically the same as kohya-ss scripts, but it sup
 Note: LyCORIS supports only single merge due to its special structure. Only ratios of 1,0 can be used for single merges. If any other value is used, the result will not match the Block weight LoRA result, even if the value is "SAME TO STRENGTH".
 LoCon will match reasonably well even with non-integers.
 
-LoCon/LyCORIS merge to model is enable in web-ui 1.5 
+LoCon/LyCORIS merge to model is enabled in web-ui 1.5
 |  1.X,2.X     | LoRA  | LoCon | LyCORIS |
 |----------|-------|-------|---------|
 | Merge to Model |   Yes   | Yes   | Yes     |
@@ -309,7 +309,7 @@ LoCon/LyCORIS merge to model is enable in web-ui 1.5
 ### Merge LoRAs
 Merges one or more LoRAs. kohya-ss's latest script is used, so LoRAs with different dimensions can be merged, but note that the generated images may differ significantly because LoRAs are recalculated when dimensions are converted. 
 
-The calculate dimention button calculates the dimensions of each LoRA and activates the display and sorting functions. The calculation is rather time-consuming and takes several tens of seconds for a LoRA of about 50. Newly merged LoRAs will not appear in the list, so please press the reload button. Dimension recalculation only calculates the added LoRAs.
+The calculate dimension button calculates the dimensions of each LoRA and activates the display and sorting functions. The calculation is rather time-consuming and takes several tens of seconds for a LoRA of about 50. Newly merged LoRAs will not appear in the list, so please press the reload button. Dimension recalculation only calculates the added LoRAs.
 
 ### Merge to Checkpoint
 Merge LoRAs into a model. Multiple LoRAs can be merged at the same time.  
@@ -324,7 +324,7 @@ LoRAname1:ratio1:1,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0
 
 ### Extract from checkpoints
 Generates a LoRA from the difference of two models.
-If you specify a demension, it will be created with the specified dimension. If no demension is specified, LoRAs are created with dim 128.
+If you specify a dimension, it will be created with the specified dimension. If no dimension is specified, LoRAs are created with dim 128.
 The blend ratio can be adjusted by alpha and beta. $(\alpha A - \beta B)$ alpha, beta = 1 is the normal LoRA creation.
 
 ### Extract from two LoRAs
@@ -356,10 +356,10 @@ The following figures show the generated images for each case of normal image ge
 Analyze the differences between two models. Select the models you wish to compare, model A and model B.
 ### Mode
 
-The ASimilality mode compares tensors computed from qkv. Other modes calculates from the cosine similarity of each element. It seems that the calculated difference becomes smaller in modes other than ASimilality mode. Since the ASimilality mode gives a result that is closer to the difference in output images, you should generally use this one.
-This Asimilality analysis was created by extending the [Asimilality script](https://huggingface.co/JosephusCheung/ASimilarityCalculatior).
+The ASimilarity mode compares tensors computed from qkv. Other modes calculate from the cosine similarity of each element. It seems that the calculated difference becomes smaller in modes other than ASimilarity mode. Since the ASimilarity mode gives a result that is closer to the difference in output images, you should generally use this one.
+This ASimilarity analysis was created by extending the [ASimilarity script](https://huggingface.co/JosephusCheung/ASimilarityCalculatior).
 ### Block Method
-This is a method to calculate the ratio for each hierarchy in modes other than the ASimilality mode. Mean represents the average, min represents the minimum value, and attn2 outputs the value of attn2 as the calculation result of the block.
+This is a method to calculate the ratio for each hierarchy in modes other than the ASimilarity mode. Mean represents the average, min represents the minimum value, and attn2 outputs the value of attn2 as the calculation result of the block.
 
 ## History
 You can search the merge history. The search function allows for both 'and' and 'or' searches.
