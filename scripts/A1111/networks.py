@@ -35,7 +35,8 @@ module_types = [
     network_oft.ModuleTypeOFT(),
 ]
 
-forge = launch_utils.git_tag()[0:2] == "f2"
+ui_tag = launch_utils.git_tag()
+forge = ui_tag[0:2] == "f2" or ui_tag == "neo"
 
 re_digits = re.compile(r"\d+")
 re_x_proj = re.compile(r"(.*)_([qkv]_proj)$")
