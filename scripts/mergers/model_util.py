@@ -15,6 +15,17 @@ try:
 except:
   xl = False
 
+def checkpoint_save_dir():
+    ckpt_dir = getattr(shared.cmd_opts, "ckpt_dir", None)
+    if ckpt_dir is not None:
+        return ckpt_dir
+
+    ckpt_dirs = getattr(shared.cmd_opts, "ckpt_dirs", [])
+    if len(ckpt_dirs) == 1:
+        return ckpt_dirs[0]
+
+    return sd_models.model_path
+
 def prune_model(model, isxl=False):
     keys = list(model.keys())
     base_prefix = "conditioner." if isxl else "cond_stage_model."
@@ -102,7 +113,7 @@ def savemodel(state_dict,currentmodel,fname,savesets,metadata={}):
     else:
         fname = fname if ext in fname else fname +pre+ext
 
-    fname = os.path.join(shared.cmd_opts.ckpt_dir if shared.cmd_opts.ckpt_dir is not None else sd_models.model_path, fname)
+    fname = os.path.join(checkpoint_save_dir(), fname)
     fname = fname.replace("ProgramFiles_x86_","Program Files (x86)")
 
     if len(fname) > 255:

@@ -1803,11 +1803,16 @@ def forge_loader(state_dict, additional_state_dicts):
     state_dicts, estimated_config = split_state_dict(state_dict, additional_state_dicts)
     state_dict = None
     del state_dict
-    
+
     repo_name = estimated_config.huggingface_repo
 
-    local_path = os.path.join(fld.dir_path, 'huggingface', repo_name)
-    config: dict = fld.DiffusionPipeline.load_config(local_path)
+    from diffusers import DiffusionPipeline
+
+    huggingface_dir = getattr(fld, "HF", None)
+    if huggingface_dir is None:
+        huggingface_dir = os.path.join(fld.dir_path, "huggingface")
+    local_path = os.path.join(huggingface_dir, repo_name)
+    config: dict = DiffusionPipeline.load_config(local_path)
     huggingface_components = {}
     for component_name, v in config.items():
         if isinstance(v, list) and len(v) == 2:
@@ -1820,7 +1825,7 @@ def forge_loader(state_dict, additional_state_dicts):
                 huggingface_components[component_name] = component
 
     for M in fld.possible_models:
-        if any(isinstance(estimated_config, x) for x in M.matched_guesses):
+        if any(type(estimated_config) is x for x in M.matched_guesses):
             return M(estimated_config=estimated_config, huggingface_components=huggingface_components)
 
     print('Failed to recognize model type!')
