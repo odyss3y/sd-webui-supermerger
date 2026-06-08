@@ -192,5 +192,4 @@ class GenParamGetter(scripts.Script):
                 )
             GenParamGetter.events_assigned = True
 
-if __package__ == "GenParamGetter":
-    script_callbacks.on_app_started(GenParamGetter.get_params_components)
+script_callbacks.on_app_started(GenParamGetter.get_params_components)
