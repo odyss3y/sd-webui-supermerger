@@ -27,7 +27,10 @@ from modules.ui import  plaintext_to_html
 from modules.shared import opts, cmd_opts
 from modules.sd_models import unload_model_weights
 from modules.processing import create_infotext,Processed
-from modules.generation_parameters_copypaste import create_override_settings_dict
+try:
+    from modules.infotext_utils import create_override_settings_dict
+except ImportError:
+    from modules.generation_parameters_copypaste import create_override_settings_dict
 from scripts.mergers.model_util import filenamecutter,savemodel
 from math import ceil
 import sys
