@@ -38,6 +38,12 @@ module_types = [
 ui_tag = launch_utils.git_tag()
 forge = ui_tag[0:2] == "f2" or ui_tag == "neo"
 
+def lora_option(name, default):
+    try:
+        return getattr(shared.opts, name)
+    except AttributeError:
+        return default
+
 re_digits = re.compile(r"\d+")
 re_x_proj = re.compile(r"(.*)_([qkv]_proj)$")
 re_compiled = {}
@@ -175,7 +181,7 @@ class BundledTIHash(str):
         self.hash = hash_str
 
     def __str__(self):
-        return self.hash if shared.opts.lora_bundled_ti_to_infotext else ''
+        return self.hash if lora_option("lora_bundled_ti_to_infotext", False) else ''
 
 def read_state_dict(filename):
     if forge:
@@ -302,7 +308,8 @@ def load_network(name, network_on_disk, isxl, is_sd2):
 
 
 def purge_networks_from_memory():
-    while len(networks_in_memory) > shared.opts.lora_in_memory_limit and len(networks_in_memory) > 0:
+    lora_in_memory_limit = lora_option("lora_in_memory_limit", 0)
+    while len(networks_in_memory) > lora_in_memory_limit and len(networks_in_memory) > 0:
         name = next(iter(networks_in_memory))
         networks_in_memory.pop(name, None)
 
@@ -389,9 +396,9 @@ def load_networks(names, te_multipliers=None, unet_multipliers=None, dyn_dims=No
             if not hasattr(shared.sd_model, "comments"):
                 shared.sd_model.comments = []
             shared.sd_model.comments.append(lora_not_found_message)
-        if shared.opts.lora_not_found_warning_console:
+        if lora_option("lora_not_found_warning_console", True):
             print(f'\n{lora_not_found_message}\n')
-        if shared.opts.lora_not_found_gradio_warning:
+        if lora_option("lora_not_found_gradio_warning", False):
             gr.Warning(lora_not_found_message)
 
     purge_networks_from_memory()
@@ -607,7 +614,7 @@ def network_reset_cached_weight(self: Union[torch.nn.Conv2d, torch.nn.Linear]):
 
 
 def network_Linear_forward(self, input):
-    if shared.opts.lora_functional:
+    if lora_option("lora_functional", False):
         return network_forward(self, input, originals.Linear_forward)
 
     network_apply_weights(self)
@@ -622,7 +629,7 @@ def network_Linear_load_state_dict(self, *args, **kwargs):
 
 
 def network_Conv2d_forward(self, input):
-    if shared.opts.lora_functional:
+    if lora_option("lora_functional", False):
         return network_forward(self, input, originals.Conv2d_forward)
 
     network_apply_weights(self)
@@ -637,7 +644,7 @@ def network_Conv2d_load_state_dict(self, *args, **kwargs):
 
 
 def network_GroupNorm_forward(self, input):
-    if shared.opts.lora_functional:
+    if lora_option("lora_functional", False):
         return network_forward(self, input, originals.GroupNorm_forward)
 
     network_apply_weights(self)
@@ -652,7 +659,7 @@ def network_GroupNorm_load_state_dict(self, *args, **kwargs):
 
 
 def network_LayerNorm_forward(self, input):
-    if shared.opts.lora_functional:
+    if lora_option("lora_functional", False):
         return network_forward(self, input, originals.LayerNorm_forward)
 
     network_apply_weights(self)
