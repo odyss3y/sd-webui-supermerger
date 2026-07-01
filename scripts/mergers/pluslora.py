@@ -24,7 +24,8 @@ from scripts.mergers.model_util import filenamecutter, savemodel
 from scripts.mergers.mergers import extract_super, unload_forge, q_dequantize, q_quantize, qdtyper, prefixer, BLOCKIDFLUX
 from tqdm import tqdm
 
-forge = launch_utils.git_tag()[0:2] == "f2"
+ui_tag = launch_utils.git_tag()
+forge = ui_tag[0:2] == "f2" or ui_tag == "neo"
 
 selectable = []
 pchanged = False
@@ -841,7 +842,7 @@ def pluslora(lnames,loraratios,settings,output,model,save_precision,calc_precisi
             orig_checkpoint = None
         checkpoint_info = sd_models.get_closet_checkpoint_match(model)
         if orig_checkpoint != checkpoint_info:
-            sd_models.reload_model_weights(info=checkpoint_info)
+            load_model(checkpoint_info)
         
         theta_0 = newpluslora(theta_0,filenames,lweis,names, calc_precision, isxl,isv2,isflux, keychanger)
         
@@ -860,7 +861,7 @@ def pluslora(lnames,loraratios,settings,output,model,save_precision,calc_precisi
             prefixer(theta_0, True)
 
         if orig_checkpoint:
-            sd_models.reload_model_weights(info=orig_checkpoint)
+            load_model(orig_checkpoint, reload=True)
     else:
         theta_0 = oldpluslora(theta_0,filenames,lweis,names, calc_precision,isxl,isv2, keychanger, device)
 
@@ -870,7 +871,8 @@ def pluslora(lnames,loraratios,settings,output,model,save_precision,calc_precisi
     result = savemodel(theta_0,dname,output,settings)
 
     lora.loaded_loras.clear()
-    sd_models.checkpoints_loaded.clear()
+    if hasattr(sd_models, "checkpoints_loaded"):
+        sd_models.checkpoints_loaded.clear()
     if forge:
         from modules.sd_models import FakeInitialModel
         sd_models.unload_model_weights()

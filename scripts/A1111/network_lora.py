@@ -2,10 +2,11 @@ import torch
 
 import scripts.A1111.lyco_helpers as lyco_helpers
 import scripts.A1111.network as network
-from modules import devices
+from modules import devices, launch_utils
 from modules.ui import versions_html
 
-forge = "forge" in versions_html().lower()
+ui_tag = launch_utils.git_tag()
+forge = ui_tag[0:2] == "f2" or ui_tag == "neo" or "forge" in versions_html().lower()
 class QkvLinear(torch.nn.Linear):
     pass
 

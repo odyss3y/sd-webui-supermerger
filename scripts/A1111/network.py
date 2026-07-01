@@ -12,6 +12,12 @@ try:
 except:
     pass
 
+def lora_option(name, default):
+    try:
+        return getattr(shared.opts, name)
+    except AttributeError:
+        return default
+
 class QkvLinear(torch.nn.Linear):
     pass
 
@@ -88,7 +94,7 @@ class NetworkOnDisk:
 
     def get_alias(self):
         import networks
-        if shared.opts.lora_preferred_name == "Filename" or self.alias.lower() in networks.forbidden_network_aliases:
+        if lora_option("lora_preferred_name", "Alias from file") == "Filename" or self.alias.lower() in networks.forbidden_network_aliases:
             return self.name
         else:
             return self.alias

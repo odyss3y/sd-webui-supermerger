@@ -147,6 +147,9 @@ def numalistmaker(numa):
         numa[i] = r[0:8]+r[11:14]+r[14:18]+r[9:11]
     return numa
 
+def model_is_unselected(model):
+    return model is None or model == "" or model == []
+
 def caster(news,hear):
     if hear: print(news)
 
@@ -214,9 +217,9 @@ def sgenxyplot(xtype,xmen,ytype,ymen,ztype,zmen,esettings,
     if zmen =="" and not ztype=="none":
         print("Parameter Z is empty, disable Z")
         ztype = "none"
-    if model_a ==[] and "model_A" not in XYZ:return f"ERROR: model_A is not selected",*None5
-    if model_b ==[] and "model_B" not in XYZ:return f"ERROR: model_B is not selected",*None5
-    if model_c ==[] and usebeta and "model_C" not in XYZ:return "ERROR: model_C is not selected",*None5
+    if model_is_unselected(model_a) and "model_A" not in XYZ:return f"ERROR: model_A is not selected",*None5
+    if model_is_unselected(model_b) and "model_B" not in XYZ:return f"ERROR: model_B is not selected",*None5
+    if model_is_unselected(model_c) and usebeta and "model_C" not in XYZ:return "ERROR: model_C is not selected",*None5
     if xtype == ytype and not (xtype == "add elemental" or xtype == RAND): return "ERROR: same type selected for X,Y",*None5
 
     if useblocks:
