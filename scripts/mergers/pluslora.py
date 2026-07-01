@@ -842,7 +842,7 @@ def pluslora(lnames,loraratios,settings,output,model,save_precision,calc_precisi
             orig_checkpoint = None
         checkpoint_info = sd_models.get_closet_checkpoint_match(model)
         if orig_checkpoint != checkpoint_info:
-            sd_models.reload_model_weights(info=checkpoint_info)
+            load_model(checkpoint_info)
         
         theta_0 = newpluslora(theta_0,filenames,lweis,names, calc_precision, isxl,isv2,isflux, keychanger)
         
@@ -861,7 +861,7 @@ def pluslora(lnames,loraratios,settings,output,model,save_precision,calc_precisi
             prefixer(theta_0, True)
 
         if orig_checkpoint:
-            sd_models.reload_model_weights(info=orig_checkpoint)
+            load_model(orig_checkpoint, reload=True)
     else:
         theta_0 = oldpluslora(theta_0,filenames,lweis,names, calc_precision,isxl,isv2, keychanger, device)
 
